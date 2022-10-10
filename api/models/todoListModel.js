@@ -3,19 +3,20 @@ var Schema = mongoose.Schema;
 
 
 var CourseSchema = new Schema({
-	Courseid:{
-		type:Number,
+	Courseid: {
+		type: Number,
 		option: 'AUTO_INCREMENT'
 	},
-	Coursename:{
-		type:String,
-		required:'Kindly enter course name'
+	Coursename: {
+		type: String,
+		required: 'Kindly enter course name'
 	},
-	Coursedes:{
-		type:String,
-		required:'Kindly enter course descprition'
+	Coursedes: {
+		type: String,
+		required: 'Kindly enter course descprition'
 	},
-	
-});
 
-module.exports = mongoose.model('courses',CourseSchema);
+});
+const model = mongoose.model("courses", CourseSchema);
+
+module.exports = model;
