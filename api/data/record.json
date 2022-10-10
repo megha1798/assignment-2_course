@@ -1,0 +1,17 @@
+[
+    {
+        "CourseID": 1,
+        "CourseName": "Mobile API",
+        "CourseDescription": "Moblie application using different api"
+    },
+    {
+        "CourseID": 2,
+        "CourseName": "Android",
+        "CourseDescription": "Developing application in android"
+    },
+    {
+        "CourseID": 3,
+        "CourseName": "IOs",
+        "CourseDescription": "Developing application in android"
+    }
+]

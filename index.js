@@ -3,7 +3,7 @@ const express = require('express');
 
 
 const app = express();
-var courses = require('./api/models/todoListModel'),
+
 bodyParser = require('body-parser');
 const InitiateMongoServer = require("./db");
 
@@ -12,7 +12,7 @@ InitiateMongoServer();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({
-	extended:true
+	extended:false
 }));
 
 app.use(express.json());

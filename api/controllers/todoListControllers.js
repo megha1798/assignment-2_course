@@ -1,32 +1,82 @@
-var mongoose = require('mongoose');
-var Courses = mongoose.model('courses');
+const courseModel = require("../models/todoListModel");
+const response = require('../data/response');
+const record = require("../data/record.json");
 
-//Display list of all tasks
-exports.list_all_courses = function (req, res) {
-	Courses.find({}, function (err, course) {
-		if (err)
-			res.send(err);
-		res.json(course);
-	});
+(async () => {
+  for (data of record) {
+    const { CourseID, CourseName, CourseDescription } = data;
+    try {
+      const course = await courseModel.create({
+        CourseID,
+        CourseName,
+        CourseDescription,
+      });
+      console.log(`data inserted for CourseID: ${CourseID}`);
+    } catch (error) {
+      console.log(`data already exists for CourseID: ${CourseID}`);
+    }
+  }
+})();
+
+exports.getCourse = async (req, res) => {
+  try {
+    const { courseID } = req.params;
+    const course = await courseModel.findOne({ CourseID: courseID });
+    return response({ res, data: course });
+  } catch (error) {
+    response({ res, error });
+  }
 };
 
-
-
-exports.create_a_course = function (req, res) {
-	var new_course = new Courses(req.body);
-	new_course.save(function (err, course) {
-		if (err)
-			res.send(err);
-		res.json(course);
-	});
+// Update
+exports.updateCourse = async (req, res) => {
+  try {
+    const { CourseID, CourseName, CourseDescription } = req.body;
+    const course = await courseModel.findOneAndUpdate(
+      { CourseID },
+      { CourseName, CourseDescription },
+      { new: true }
+    );
+    return response({ res, data: course });
+  } catch (error) {
+    response({ res, error });
+  }
 };
+
+// Get All
+exports.getAllCourses = async (req, res) => {
+  try {
+    const courses = await courseModel.find();
+    return response({ res, data: courses.length ? courses : null });
+  } catch (error) {
+    response({ res, error });
+  }
+};
+
 exports.deleteCourse = async (req, res) => {
-	try {
-		const { Courseid } = req.params;
-		const courses = await Courses.deleteOne({ Courseid });
-		return response({ res, data: courses });
-	} catch (err) {
-		response({ res, err });
-	}
+  try {
+    const { courseID } = req.params;
+    const course = await courseModel.deleteOne({ courseID });
+    return response({ res, data: course });
+  } catch (error) {
+    response({ res, error });
+  }
 };
 
+exports.insertCourse = async (req, res) => {
+  try {
+    const { CourseID, CourseName, CourseDescription } = req.body;
+
+    const course = await courseModel.create({
+      CourseID,
+
+      CourseName,
+
+      CourseDescription,
+    });
+
+    return response({ res, data: course });
+  } catch (error) {
+    response({ res, error });
+  }
+};
